@@ -1,0 +1,78 @@
+Fixes:
+
+Download at
+https://commons.apache.org/proper/commons-lang/download_lang.cgi
+commons-lang3-3.4-bin.zip and use commons-lang3-3.4.jar in project library
+
+to fix classes not found over org.apache.commons.lang3.builder.* package
+
+---------------------------------------------------------------------------
+Download at
+http://download.oracle.com/otndocs/jcp/jaxrs-2_0-fr-spec/index.html
+JSR-000339 JavaTM API for RESTful Web Services 2.0 Final Release
+
+and
+from http://mvnrepository.com/artifact/javax.ws.rs/javax.ws.rs-api/2.0-m02
+javax.ws.rs-api-2.0-m02.jar
+
+to fix classes that needs this package such as
+javax.ws.rs.client.Client
+and
+javax.ws.rs.*;
+s
+
+---------------------------------------------------------------------------
+Download at
+http://grepcode.com/snapshot/repo1.maven.org/maven2/com.google.code.gson/gson/2.2.2
+Filename: gson-2.2.2.jar
+to fix dependencies on
+com.google.gson.Gson
+
+--------------------------------------------------------------------------
+Download from http://mvnrepository.com
+These:
+grizzly-framework-2.3.4.jar
+grizzly-http-2.3.4.jar
+grizzly-http-server-2.3.4.jar
+jersey-container-grizzly2-http-2.0.jar
+
+to fix issues from
+org.glassfish.grizzly.*
+and
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+
+
+-----------------------------------------------------------------------------
+File: jersey-server-2.0-m11.jar
+for dependency:
+org.glassfish.jersey.server.ResourceConfig;
+
+-----------------------------------------------------------------------------
+Pom.xml
+<!-- Thiago: As not providing web.xml, adding this to ignore missing web.xml by failOnMissingWebXml -->
+            <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-war-plugin</artifactId>
+	        <version>2.3</version>
+	        <configuration>
+         		<failOnMissingWebXml>false</failOnMissingWebXml>
+		</configuration>
+	    </plugin>
+
+---------------------------------------------------------------------------------
+On com.thiagoleoncio.trial.weather.WeatherServer
+
+
+HttpServer server = GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URL), resourceConfig, false);
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                server.shutdownNow();
+            }));
+
+Error:
+The type org.glassfish.jersey.internal.ProcessingException cannot be resolved. It is indirectly referenced from required .class files
+
+Fixed donwloading file: jersey-common-2.0-m12-1.jar
+
+
+----------------------------------------------------------------------------
+All other improvements and fixes are referred to assignment.md file.
